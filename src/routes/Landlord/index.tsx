@@ -34,7 +34,7 @@ import {
   Legend,
 } from "recharts";
 
-export const Route = createFileRoute("/landlord/")({
+export const Route = createFileRoute("/Landlord/")({
   component: LandlordDashboard,
 });
 
