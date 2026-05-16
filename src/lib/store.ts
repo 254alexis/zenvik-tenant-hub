@@ -35,54 +35,18 @@ export type MaintenanceRequest = {
   updated_at: string;
 };
 
+// No demo / mock seed data. All real records must come from the PHP/MySQL
+// backend at VITE_API_BASE_URL. This local store only holds optimistic
+// in-memory additions made through the UI; it is NOT a data source.
 const initial = {
-  properties: [
-    { id: "p1", name: "Riverside Apartments", address: "120 River Rd", units: 18, type: "Residential" },
-    { id: "p2", name: "Northgate Tower", address: "44 Northgate Ave", units: 24, type: "Residential" },
-    { id: "p3", name: "Eastview Lofts", address: "9 East Plaza", units: 12, type: "Mixed-use" },
-  ] as Property[],
-  units: [
-    { id: "u1", property_id: "p1", label: "Apt 4B", bedrooms: 2, rent: 2400, status: "occupied" },
-    { id: "u2", property_id: "p1", label: "Apt 4C", bedrooms: 1, rent: 1800, status: "vacant" },
-    { id: "u3", property_id: "p1", label: "Apt 5A", bedrooms: 3, rent: 3200, status: "maintenance" },
-    { id: "u4", property_id: "p2", label: "Apt 12", bedrooms: 2, rent: 1850, status: "occupied" },
-    { id: "u5", property_id: "p2", label: "Apt 14", bedrooms: 1, rent: 1500, status: "vacant" },
-    { id: "u6", property_id: "p3", label: "Loft 7A", bedrooms: 2, rent: 2100, status: "occupied" },
-  ] as Unit[],
-  tenants: [
-    { id: "t1", name: "Sarah Chen", email: "sarah@example.com", phone: "+1 555 0142", unit_id: "u1" },
-    { id: "t2", name: "Marcus Webb", email: "marcus@example.com", phone: "+1 555 0188", unit_id: "u4" },
-    { id: "t3", name: "Lina Park", email: "lina@example.com", phone: "+1 555 0211", unit_id: "u6" },
-    { id: "t4", name: "Diego Romero", email: "diego@example.com", phone: "+1 555 0299", unit_id: null },
-  ] as Tenant[],
-  invoices: [
-    { id: "inv-2041", tenant_id: "t1", period: "Nov 2025", amount: 2400, due: "2025-11-01", status: "pending" },
-    { id: "inv-2018", tenant_id: "t1", period: "Oct 2025", amount: 2400, due: "2025-10-01", status: "paid" },
-    { id: "inv-2042", tenant_id: "t2", period: "Nov 2025", amount: 1850, due: "2025-11-01", status: "paid" },
-    { id: "inv-2043", tenant_id: "t3", period: "Nov 2025", amount: 2100, due: "2025-11-01", status: "overdue" },
-  ] as Invoice[],
-  payments: [
-    { id: "pay-501", tenant_id: "t1", invoice_id: "inv-2018", amount: 2400, method: "Card", date: "2025-10-01" },
-    { id: "pay-502", tenant_id: "t2", invoice_id: "inv-2042", amount: 1850, method: "Bank transfer", date: "2025-11-01" },
-  ] as Payment[],
-  notifications: [
-    { id: "n1", title: "New maintenance request", body: "Apt 4B reported a leaking faucet.", date: "2h ago", status: "unread" },
-    { id: "n2", title: "Payment received", body: "Marcus Webb paid $1,850.", date: "1d ago", status: "unread" },
-    { id: "n3", title: "Lease renewal upcoming", body: "Lina Park's lease ends in 60 days.", date: "3d ago", status: "read" },
-  ] as Notification[],
-  documents: [
-    { id: "d1", name: "Lease - Sarah Chen.pdf", category: "lease", size_kb: 412, uploaded_at: "2025-09-12", uploaded_by: "Admin", tenant_id: "t1", property_id: "p1" },
-    { id: "d2", name: "Building insurance 2025.pdf", category: "policy", size_kb: 1280, uploaded_at: "2025-08-04", uploaded_by: "Admin", property_id: "p2" },
-    { id: "d3", name: "Marcus Webb - ID.jpg", category: "id", size_kb: 220, uploaded_at: "2025-07-21", uploaded_by: "Tenant", tenant_id: "t2" },
-    { id: "d4", name: "Invoice INV-2018.pdf", category: "invoice", size_kb: 96, uploaded_at: "2025-10-01", uploaded_by: "System", tenant_id: "t1" },
-    { id: "d5", name: "Receipt PAY-501.pdf", category: "receipt", size_kb: 88, uploaded_at: "2025-10-01", uploaded_by: "System", tenant_id: "t1" },
-  ] as Document[],
-  maintenance: [
-    { id: "m1", title: "Leaking kitchen faucet", description: "Constant drip from cold tap.", property_id: "p1", unit_id: "u1", tenant_id: "t1", category: "Plumbing", priority: "medium", status: "assigned", assigned_to: "James Carter", created_at: "2025-11-04", updated_at: "2025-11-05" },
-    { id: "m2", title: "AC unit not cooling", description: "Living room AC blows warm air.", property_id: "p2", unit_id: "u4", tenant_id: "t2", category: "HVAC", priority: "high", status: "in_progress", assigned_to: "Priya Patel", created_at: "2025-11-02", updated_at: "2025-11-06" },
-    { id: "m3", title: "Broken window latch", description: "Bedroom window won't lock.", property_id: "p3", unit_id: "u6", tenant_id: "t3", category: "General", priority: "low", status: "open", assigned_to: null, created_at: "2025-11-08", updated_at: "2025-11-08" },
-    { id: "m4", title: "Power outage in bathroom", description: "Outlet trips breaker.", property_id: "p1", unit_id: "u3", tenant_id: null, category: "Electrical", priority: "urgent", status: "resolved", assigned_to: "James Carter", created_at: "2025-10-22", updated_at: "2025-10-25" },
-  ] as MaintenanceRequest[],
+  properties: [] as Property[],
+  units: [] as Unit[],
+  tenants: [] as Tenant[],
+  invoices: [] as Invoice[],
+  payments: [] as Payment[],
+  notifications: [] as Notification[],
+  documents: [] as Document[],
+  maintenance: [] as MaintenanceRequest[],
 };
 
 let store = structuredClone(initial);
