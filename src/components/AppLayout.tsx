@@ -19,6 +19,8 @@ import {
   Menu,
   Wallet,
   AlertTriangle,
+  ToggleRight,
+  Activity,
 } from "lucide-react";
 import { setToken } from "@/lib/api";
 import { setSession, ROLE_LABEL, type Role } from "@/lib/session";
@@ -51,7 +53,10 @@ const NAV: Record<Role, NavItem[]> = {
     { to: "/admin/landlords", label: "Landlords", icon: ShieldCheck },
     { to: "/admin/properties", label: "Properties", icon: Building2 },
     { to: "/admin/users", label: "Users", icon: Users },
-    { to: "/admin/reports", label: "Reports", icon: BarChart3 },
+    { to: "/admin/reports", label: "Revenue", icon: BarChart3 },
+    { to: "/admin/subscriptions", label: "Subscriptions", icon: CreditCard },
+    { to: "/admin/features", label: "Feature flags", icon: ToggleRight },
+    { to: "/admin/monitoring", label: "Monitoring", icon: Activity },
     { to: "/settings", label: "Settings", icon: Settings },
   ],
   landlord: [
