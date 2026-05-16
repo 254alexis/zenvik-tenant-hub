@@ -1,4 +1,6 @@
-export const API_BASE = "https://tenant.zenviktechnologies.com/api";
+export const API_BASE =
+  (import.meta.env.VITE_API_BASE_URL as string | undefined) ??
+  "https://tenant.zenviktechnologies.com/api";
 
 function getToken(): string | null {
   if (typeof window === "undefined") return null;
