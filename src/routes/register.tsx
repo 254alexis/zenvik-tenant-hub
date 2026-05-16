@@ -38,8 +38,9 @@ function RegisterPage() {
     return null;
   };
 
-  const submit = async (e: React.FormEvent) => {
-    e.preventDefault();
+  const submit = async (e?: React.FormEvent<HTMLFormElement> | React.MouseEvent<HTMLButtonElement>) => {
+    e?.preventDefault();
+    e?.stopPropagation();
     setError(null);
     setSuccess(null);
 
@@ -131,7 +132,7 @@ function RegisterPage() {
             </Alert>
           )}
 
-          <form onSubmit={submit} className="space-y-4">
+          <form onSubmit={submit} noValidate className="space-y-4">
             <div className="space-y-2">
               <Label htmlFor="fullName">Full name</Label>
               <Input
@@ -213,7 +214,14 @@ function RegisterPage() {
               </div>
             </div>
 
-            <Button type="submit" className="w-full" disabled={loading}>
+            <Button
+              type="button"
+              className="w-full"
+              disabled={loading}
+              onClick={(event) => {
+                void submit(event);
+              }}
+            >
               {loading && <Loader2 className="h-4 w-4 animate-spin" />}
               {loading ? "Creating account…" : "Create account"}
             </Button>

@@ -24,8 +24,9 @@ function LoginPage() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  const submit = async (e: React.FormEvent) => {
-    e.preventDefault();
+  const submit = async (e?: React.FormEvent<HTMLFormElement> | React.MouseEvent<HTMLButtonElement>) => {
+    e?.preventDefault();
+    e?.stopPropagation();
     setError(null);
 
     if (!email.trim() || !password) {
@@ -118,7 +119,7 @@ function LoginPage() {
             </Alert>
           )}
 
-          <form onSubmit={submit} className="space-y-4">
+          <form onSubmit={submit} noValidate className="space-y-4">
             <div className="space-y-2">
               <Label>Role</Label>
               <div className="grid grid-cols-2 gap-2">
@@ -162,7 +163,14 @@ function LoginPage() {
                 required
               />
             </div>
-            <Button type="submit" className="w-full" disabled={loading}>
+            <Button
+              type="button"
+              className="w-full"
+              disabled={loading}
+              onClick={(event) => {
+                void submit(event);
+              }}
+            >
               {loading && <Loader2 className="h-4 w-4 animate-spin" />}
               {loading ? "Signing in…" : "Continue"}
             </Button>
