@@ -6,7 +6,7 @@ import { Label } from "@/components/ui/label";
 import { Card } from "@/components/ui/card";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Building2, Loader2, AlertCircle } from "lucide-react";
-import { apiFetch } from "@/lib/api";
+
 import { setSession, ROLE_HOME, ROLE_LABEL, type Role } from "@/lib/session";
 import { toast } from "sonner";
 
@@ -39,14 +39,19 @@ function LoginPage() {
 
     setLoading(true);
     try {
-      const res = await apiFetch<{
+      const response = await fetch(
+        "https://tenant.zenviktechnologies.com/api/login.php",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ email: email.trim(), password }),
+        },
+      );
+      const res: {
         status: string;
         message?: string;
         user?: { id: string; name: string; email: string; role?: Role };
-      }>("/login.php", {
-        method: "POST",
-        body: JSON.stringify({ email, password, role }),
-      });
+      } = await response.json().catch(() => ({ status: "error", message: "Invalid server response" }));
 
       if (res.status !== "success") {
         throw new Error(res.message || "Login failed");
