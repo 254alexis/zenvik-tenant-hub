@@ -9,8 +9,7 @@ export const Route = createFileRoute("/tenant/maintenance")({
 
 function TenantMaintenance() {
   const session = useSession();
-  // Map session user to a tenant id (demo: t1 fallback for tenant role)
-  const tenantId = session?.user_id ? `t${session.user_id}` : "t1";
+  const tenantId = session?.user_id ? String(session.user_id) : "";
   return (
     <AppLayout allow={["tenant"]}>
       <MaintenanceView tenantOnly={tenantId} />
