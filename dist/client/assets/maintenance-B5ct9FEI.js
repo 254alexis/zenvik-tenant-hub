@@ -1,1 +1,0 @@
-import{j as t,Q as s}from"./index-C-7KnZ_G.js";import{u as o,A as a}from"./AppLayout-DIFeGl7z.js";import"./api-CpSOeuu-.js";function u(){const n=o(),e=n?.user_id?`t${n.user_id}`:"t1";return t.jsx(a,{allow:["tenant"],children:t.jsx(s,{tenantOnly:e})})}export{u as component};
