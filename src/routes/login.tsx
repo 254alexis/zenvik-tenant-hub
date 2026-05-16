@@ -39,45 +39,45 @@ function LoginPage() {
 
     setLoading(true);
     try {
-      let user_id: string | number = email;
-      let resolvedRole: Role = role;
-      let landlord_id: string | number | null =
-        role === "landlord" ? "self" : role === "tenant" || role === "staff" ? "ll-001" : null;
-      let name: string | undefined;
+      const res = await apiFetch<{
+        status: string;
+        message?: string;
+        user?: { id: string; name: string; email: string };
+      }>("/auth/login.php", {
+        method: "POST",
+        body: JSON.stringify({ email, password, role }),
+      });
 
-      try {
-        const res = await apiFetch<any>("/auth/login.php", {
-          method: "POST",
-          body: JSON.stringify({ email, password, role }),
-        });
-        if (res?.success === false) {
-          throw new Error(res.message || res.error || "Invalid credentials");
+      if (res.status !== "success") {
+        const msg = res.message || "Login failed";
+        if (/not found/i.test(msg)) {
+          throw new Error("User not found");
         }
-        const token = res?.token || res?.access_token || res?.data?.token;
-        if (token) setToken(token);
-        const u = res?.user || res?.data?.user || res?.data || res;
-        if (u?.user_id ?? u?.id) user_id = u.user_id ?? u.id;
-        if (u?.role) resolvedRole = u.role as Role;
-        if (u?.landlord_id !== undefined) landlord_id = u.landlord_id;
-        if (u?.name || u?.full_name) name = u.name || u.full_name;
-      } catch (apiErr: any) {
-        // If backend is unreachable in dev, allow demo login; bubble real auth errors.
-        const msg = apiErr?.message || "";
-        if (/invalid|credential|unauthor|forbidden/i.test(msg)) {
-          throw new Error("Invalid email or password.");
+        if (/wrong password|incorrect password/i.test(msg)) {
+          throw new Error("Wrong password");
         }
-        // network/dev fallback
+        throw new Error(msg);
+      }
+
+      const u = res.user;
+      if (!u) {
+        throw new Error("Invalid response from server");
       }
 
       setSession({
-        user_id: String(user_id),
-        role: resolvedRole,
-        landlord_id: landlord_id == null ? null : String(landlord_id),
-        name,
-        email,
+        user_id: String(u.id),
+        role,
+        landlord_id:
+          role === "landlord"
+            ? String(u.id)
+            : role === "tenant" || role === "staff"
+              ? "ll-001"
+              : null,
+        name: u.name,
+        email: u.email,
       });
-      toast.success(`Signed in as ${ROLE_LABEL[resolvedRole]}`);
-      navigate({ to: ROLE_HOME[resolvedRole] });
+      toast.success(`Signed in as ${ROLE_LABEL[role]}`);
+      navigate({ to: ROLE_HOME[role] });
     } catch (err: any) {
       setError(err.message || "Login failed");
     } finally {
