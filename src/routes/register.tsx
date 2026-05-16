@@ -6,7 +6,7 @@ import { Label } from "@/components/ui/label";
 import { Card } from "@/components/ui/card";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Building2, Loader2, AlertCircle, CheckCircle2 } from "lucide-react";
-import { apiFetch } from "@/lib/api";
+
 import { ROLE_LABEL, type Role } from "@/lib/session";
 import { toast } from "sonner";
 
