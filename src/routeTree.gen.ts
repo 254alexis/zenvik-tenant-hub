@@ -26,8 +26,8 @@ import { Route as ArrearsRouteImport } from './routes/arrears'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as TenantIndexRouteImport } from './routes/tenant/index'
 import { Route as StaffIndexRouteImport } from './routes/staff/index'
-import { Route as LandlordIndexRouteImport } from './routes/landlord/index'
 import { Route as AdminIndexRouteImport } from './routes/admin/index'
+import { Route as LandlordIndexRouteImport } from './routes/Landlord/index'
 import { Route as TenantReceiptsRouteImport } from './routes/tenant/receipts'
 import { Route as TenantMaintenanceRouteImport } from './routes/tenant/maintenance'
 import { Route as TenantDocumentsRouteImport } from './routes/tenant/documents'
@@ -117,14 +117,14 @@ const StaffIndexRoute = StaffIndexRouteImport.update({
   path: '/staff/',
   getParentRoute: () => rootRouteImport,
 } as any)
-const LandlordIndexRoute = LandlordIndexRouteImport.update({
-  id: '/landlord/',
-  path: '/landlord/',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const AdminIndexRoute = AdminIndexRouteImport.update({
   id: '/admin/',
   path: '/admin/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LandlordIndexRoute = LandlordIndexRouteImport.update({
+  id: '/Landlord/',
+  path: '/Landlord/',
   getParentRoute: () => rootRouteImport,
 } as any)
 const TenantReceiptsRoute = TenantReceiptsRouteImport.update({
@@ -162,8 +162,8 @@ export interface FileRoutesByFullPath {
   '/tenant/documents': typeof TenantDocumentsRoute
   '/tenant/maintenance': typeof TenantMaintenanceRoute
   '/tenant/receipts': typeof TenantReceiptsRoute
+  '/Landlord/': typeof LandlordIndexRoute
   '/admin/': typeof AdminIndexRoute
-  '/landlord/': typeof LandlordIndexRoute
   '/staff/': typeof StaffIndexRoute
   '/tenant/': typeof TenantIndexRoute
 }
@@ -186,8 +186,8 @@ export interface FileRoutesByTo {
   '/tenant/documents': typeof TenantDocumentsRoute
   '/tenant/maintenance': typeof TenantMaintenanceRoute
   '/tenant/receipts': typeof TenantReceiptsRoute
+  '/Landlord': typeof LandlordIndexRoute
   '/admin': typeof AdminIndexRoute
-  '/landlord': typeof LandlordIndexRoute
   '/staff': typeof StaffIndexRoute
   '/tenant': typeof TenantIndexRoute
 }
@@ -211,8 +211,8 @@ export interface FileRoutesById {
   '/tenant/documents': typeof TenantDocumentsRoute
   '/tenant/maintenance': typeof TenantMaintenanceRoute
   '/tenant/receipts': typeof TenantReceiptsRoute
+  '/Landlord/': typeof LandlordIndexRoute
   '/admin/': typeof AdminIndexRoute
-  '/landlord/': typeof LandlordIndexRoute
   '/staff/': typeof StaffIndexRoute
   '/tenant/': typeof TenantIndexRoute
 }
@@ -237,8 +237,8 @@ export interface FileRouteTypes {
     | '/tenant/documents'
     | '/tenant/maintenance'
     | '/tenant/receipts'
+    | '/Landlord/'
     | '/admin/'
-    | '/landlord/'
     | '/staff/'
     | '/tenant/'
   fileRoutesByTo: FileRoutesByTo
@@ -261,8 +261,8 @@ export interface FileRouteTypes {
     | '/tenant/documents'
     | '/tenant/maintenance'
     | '/tenant/receipts'
+    | '/Landlord'
     | '/admin'
-    | '/landlord'
     | '/staff'
     | '/tenant'
   id:
@@ -285,8 +285,8 @@ export interface FileRouteTypes {
     | '/tenant/documents'
     | '/tenant/maintenance'
     | '/tenant/receipts'
+    | '/Landlord/'
     | '/admin/'
-    | '/landlord/'
     | '/staff/'
     | '/tenant/'
   fileRoutesById: FileRoutesById
@@ -310,8 +310,8 @@ export interface RootRouteChildren {
   TenantDocumentsRoute: typeof TenantDocumentsRoute
   TenantMaintenanceRoute: typeof TenantMaintenanceRoute
   TenantReceiptsRoute: typeof TenantReceiptsRoute
-  AdminIndexRoute: typeof AdminIndexRoute
   LandlordIndexRoute: typeof LandlordIndexRoute
+  AdminIndexRoute: typeof AdminIndexRoute
   StaffIndexRoute: typeof StaffIndexRoute
   TenantIndexRoute: typeof TenantIndexRoute
 }
@@ -437,18 +437,18 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof StaffIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/landlord/': {
-      id: '/landlord/'
-      path: '/landlord'
-      fullPath: '/landlord/'
-      preLoaderRoute: typeof LandlordIndexRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/admin/': {
       id: '/admin/'
       path: '/admin'
       fullPath: '/admin/'
       preLoaderRoute: typeof AdminIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/Landlord/': {
+      id: '/Landlord/'
+      path: '/Landlord'
+      fullPath: '/Landlord/'
+      preLoaderRoute: typeof LandlordIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/tenant/receipts': {
@@ -494,8 +494,8 @@ const rootRouteChildren: RootRouteChildren = {
   TenantDocumentsRoute: TenantDocumentsRoute,
   TenantMaintenanceRoute: TenantMaintenanceRoute,
   TenantReceiptsRoute: TenantReceiptsRoute,
-  AdminIndexRoute: AdminIndexRoute,
   LandlordIndexRoute: LandlordIndexRoute,
+  AdminIndexRoute: AdminIndexRoute,
   StaffIndexRoute: StaffIndexRoute,
   TenantIndexRoute: TenantIndexRoute,
 }
