@@ -6,8 +6,8 @@ import { Label } from "@/components/ui/label";
 import { Card } from "@/components/ui/card";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Building2, Loader2, AlertCircle, CheckCircle2 } from "lucide-react";
-import { apiFetch, setToken } from "@/lib/api";
-import { setSession, ROLE_HOME, ROLE_LABEL, type Role } from "@/lib/session";
+import { apiFetch } from "@/lib/api";
+import { ROLE_LABEL, type Role } from "@/lib/session";
 import { toast } from "sonner";
 
 export const Route = createFileRoute("/register")({
@@ -60,42 +60,18 @@ function RegisterPage() {
         role,
       };
 
-      let user_id: string | number = email;
-      let landlord_id: string | number | null =
-        role === "landlord" ? "self" : null;
-      let token: string | undefined;
+      const res = await apiFetch<{ status: string; message?: string }>(
+        "/register.php",
+        { method: "POST", body: JSON.stringify(payload) },
+      );
 
-      try {
-        const res = await apiFetch<any>("/auth/register.php", {
-          method: "POST",
-          body: JSON.stringify(payload),
-        });
-        if (res?.success === false) {
-          throw new Error(res.message || res.error || "Registration failed");
-        }
-        const u = res?.user || res?.data?.user || res?.data || res;
-        if (u?.user_id ?? u?.id) user_id = u.user_id ?? u.id;
-        if (u?.landlord_id !== undefined) landlord_id = u.landlord_id;
-        token = res?.token || res?.access_token || res?.data?.token;
-      } catch (apiErr: any) {
-        const msg = apiErr?.message || "";
-        if (/exist|taken|duplicate|already/i.test(msg)) {
-          throw new Error("An account with that email already exists.");
-        }
-        // dev fallback: continue with local session
+      if (res?.status !== "success") {
+        throw new Error(res?.message || "Registration failed");
       }
 
-      if (token) setToken(token);
-      setSession({
-        user_id: String(user_id),
-        role,
-        landlord_id: landlord_id == null ? null : String(landlord_id),
-        name: fullName.trim(),
-        email: email.trim(),
-      });
-      setSuccess("Account created. Redirecting…");
-      toast.success(`Welcome, ${fullName.split(" ")[0]}!`);
-      setTimeout(() => navigate({ to: ROLE_HOME[role] }), 600);
+      setSuccess("Account created. Redirecting to login…");
+      toast.success(`Welcome, ${fullName.split(" ")[0]}! Please sign in.`);
+      setTimeout(() => navigate({ to: "/login" }), 800);
     } catch (err: any) {
       setError(err.message || "Registration failed");
     } finally {

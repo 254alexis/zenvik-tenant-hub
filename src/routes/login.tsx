@@ -6,7 +6,7 @@ import { Label } from "@/components/ui/label";
 import { Card } from "@/components/ui/card";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Building2, Loader2, AlertCircle } from "lucide-react";
-import { apiFetch, setToken } from "@/lib/api";
+import { apiFetch } from "@/lib/api";
 import { setSession, ROLE_HOME, ROLE_LABEL, type Role } from "@/lib/session";
 import { toast } from "sonner";
 
@@ -42,21 +42,14 @@ function LoginPage() {
       const res = await apiFetch<{
         status: string;
         message?: string;
-        user?: { id: string; name: string; email: string };
-      }>("/auth/login.php", {
+        user?: { id: string; name: string; email: string; role?: Role };
+      }>("/login.php", {
         method: "POST",
         body: JSON.stringify({ email, password, role }),
       });
 
       if (res.status !== "success") {
-        const msg = res.message || "Login failed";
-        if (/not found/i.test(msg)) {
-          throw new Error("User not found");
-        }
-        if (/wrong password|incorrect password/i.test(msg)) {
-          throw new Error("Wrong password");
-        }
-        throw new Error(msg);
+        throw new Error(res.message || "Login failed");
       }
 
       const u = res.user;
@@ -64,20 +57,16 @@ function LoginPage() {
         throw new Error("Invalid response from server");
       }
 
+      const finalRole: Role = (u.role as Role) || role;
       setSession({
         user_id: String(u.id),
-        role,
-        landlord_id:
-          role === "landlord"
-            ? String(u.id)
-            : role === "tenant" || role === "staff"
-              ? "ll-001"
-              : null,
+        role: finalRole,
+        landlord_id: finalRole === "landlord" ? String(u.id) : null,
         name: u.name,
         email: u.email,
       });
-      toast.success(`Signed in as ${ROLE_LABEL[role]}`);
-      navigate({ to: ROLE_HOME[role] });
+      toast.success(`Signed in as ${ROLE_LABEL[finalRole]}`);
+      navigate({ to: ROLE_HOME[finalRole] });
     } catch (err: any) {
       setError(err.message || "Login failed");
     } finally {
