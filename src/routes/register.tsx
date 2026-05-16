@@ -38,9 +38,8 @@ function RegisterPage() {
     return null;
   };
 
-  const submit = async (e?: React.FormEvent<HTMLFormElement> | React.MouseEvent<HTMLButtonElement>) => {
-    e?.preventDefault();
-    e?.stopPropagation();
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
     setError(null);
     setSuccess(null);
 
@@ -53,7 +52,7 @@ function RegisterPage() {
     setLoading(true);
     try {
       const response = await fetch(
-        "https://tenant.zenviktechnologies.com/api/register.php",
+        "https://tenant.zenviktechnologies.com/api/debug-register.php",
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
@@ -65,6 +64,7 @@ function RegisterPage() {
         },
       );
       const res = await response.json().catch(() => ({} as any));
+      console.log(res);
 
       if (res?.status !== "success") {
         throw new Error(res?.message || "Registration failed");
@@ -132,7 +132,7 @@ function RegisterPage() {
             </Alert>
           )}
 
-          <form onSubmit={submit} noValidate className="space-y-4">
+          <form onSubmit={handleSubmit} noValidate className="space-y-4">
             <div className="space-y-2">
               <Label htmlFor="fullName">Full name</Label>
               <Input
@@ -214,14 +214,7 @@ function RegisterPage() {
               </div>
             </div>
 
-            <Button
-              type="button"
-              className="w-full"
-              disabled={loading}
-              onClick={(event) => {
-                void submit(event);
-              }}
-            >
+            <Button type="submit" className="w-full" disabled={loading}>
               {loading && <Loader2 className="h-4 w-4 animate-spin" />}
               {loading ? "Creating account…" : "Create account"}
             </Button>
