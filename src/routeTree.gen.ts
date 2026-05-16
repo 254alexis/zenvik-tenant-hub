@@ -31,6 +31,13 @@ import { Route as LandlordIndexRouteImport } from './routes/Landlord/index'
 import { Route as TenantReceiptsRouteImport } from './routes/tenant/receipts'
 import { Route as TenantMaintenanceRouteImport } from './routes/tenant/maintenance'
 import { Route as TenantDocumentsRouteImport } from './routes/tenant/documents'
+import { Route as AdminUsersRouteImport } from './routes/admin/users'
+import { Route as AdminSubscriptionsRouteImport } from './routes/admin/subscriptions'
+import { Route as AdminReportsRouteImport } from './routes/admin/reports'
+import { Route as AdminPropertiesRouteImport } from './routes/admin/properties'
+import { Route as AdminMonitoringRouteImport } from './routes/admin/monitoring'
+import { Route as AdminLandlordsRouteImport } from './routes/admin/landlords'
+import { Route as AdminFeaturesRouteImport } from './routes/admin/features'
 
 const UnitsRoute = UnitsRouteImport.update({
   id: '/units',
@@ -142,6 +149,41 @@ const TenantDocumentsRoute = TenantDocumentsRouteImport.update({
   path: '/tenant/documents',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AdminUsersRoute = AdminUsersRouteImport.update({
+  id: '/admin/users',
+  path: '/admin/users',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminSubscriptionsRoute = AdminSubscriptionsRouteImport.update({
+  id: '/admin/subscriptions',
+  path: '/admin/subscriptions',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminReportsRoute = AdminReportsRouteImport.update({
+  id: '/admin/reports',
+  path: '/admin/reports',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminPropertiesRoute = AdminPropertiesRouteImport.update({
+  id: '/admin/properties',
+  path: '/admin/properties',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminMonitoringRoute = AdminMonitoringRouteImport.update({
+  id: '/admin/monitoring',
+  path: '/admin/monitoring',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminLandlordsRoute = AdminLandlordsRouteImport.update({
+  id: '/admin/landlords',
+  path: '/admin/landlords',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminFeaturesRoute = AdminFeaturesRouteImport.update({
+  id: '/admin/features',
+  path: '/admin/features',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -159,6 +201,13 @@ export interface FileRoutesByFullPath {
   '/settings': typeof SettingsRoute
   '/tenants': typeof TenantsRoute
   '/units': typeof UnitsRoute
+  '/admin/features': typeof AdminFeaturesRoute
+  '/admin/landlords': typeof AdminLandlordsRoute
+  '/admin/monitoring': typeof AdminMonitoringRoute
+  '/admin/properties': typeof AdminPropertiesRoute
+  '/admin/reports': typeof AdminReportsRoute
+  '/admin/subscriptions': typeof AdminSubscriptionsRoute
+  '/admin/users': typeof AdminUsersRoute
   '/tenant/documents': typeof TenantDocumentsRoute
   '/tenant/maintenance': typeof TenantMaintenanceRoute
   '/tenant/receipts': typeof TenantReceiptsRoute
@@ -183,6 +232,13 @@ export interface FileRoutesByTo {
   '/settings': typeof SettingsRoute
   '/tenants': typeof TenantsRoute
   '/units': typeof UnitsRoute
+  '/admin/features': typeof AdminFeaturesRoute
+  '/admin/landlords': typeof AdminLandlordsRoute
+  '/admin/monitoring': typeof AdminMonitoringRoute
+  '/admin/properties': typeof AdminPropertiesRoute
+  '/admin/reports': typeof AdminReportsRoute
+  '/admin/subscriptions': typeof AdminSubscriptionsRoute
+  '/admin/users': typeof AdminUsersRoute
   '/tenant/documents': typeof TenantDocumentsRoute
   '/tenant/maintenance': typeof TenantMaintenanceRoute
   '/tenant/receipts': typeof TenantReceiptsRoute
@@ -208,6 +264,13 @@ export interface FileRoutesById {
   '/settings': typeof SettingsRoute
   '/tenants': typeof TenantsRoute
   '/units': typeof UnitsRoute
+  '/admin/features': typeof AdminFeaturesRoute
+  '/admin/landlords': typeof AdminLandlordsRoute
+  '/admin/monitoring': typeof AdminMonitoringRoute
+  '/admin/properties': typeof AdminPropertiesRoute
+  '/admin/reports': typeof AdminReportsRoute
+  '/admin/subscriptions': typeof AdminSubscriptionsRoute
+  '/admin/users': typeof AdminUsersRoute
   '/tenant/documents': typeof TenantDocumentsRoute
   '/tenant/maintenance': typeof TenantMaintenanceRoute
   '/tenant/receipts': typeof TenantReceiptsRoute
@@ -234,6 +297,13 @@ export interface FileRouteTypes {
     | '/settings'
     | '/tenants'
     | '/units'
+    | '/admin/features'
+    | '/admin/landlords'
+    | '/admin/monitoring'
+    | '/admin/properties'
+    | '/admin/reports'
+    | '/admin/subscriptions'
+    | '/admin/users'
     | '/tenant/documents'
     | '/tenant/maintenance'
     | '/tenant/receipts'
@@ -258,6 +328,13 @@ export interface FileRouteTypes {
     | '/settings'
     | '/tenants'
     | '/units'
+    | '/admin/features'
+    | '/admin/landlords'
+    | '/admin/monitoring'
+    | '/admin/properties'
+    | '/admin/reports'
+    | '/admin/subscriptions'
+    | '/admin/users'
     | '/tenant/documents'
     | '/tenant/maintenance'
     | '/tenant/receipts'
@@ -282,6 +359,13 @@ export interface FileRouteTypes {
     | '/settings'
     | '/tenants'
     | '/units'
+    | '/admin/features'
+    | '/admin/landlords'
+    | '/admin/monitoring'
+    | '/admin/properties'
+    | '/admin/reports'
+    | '/admin/subscriptions'
+    | '/admin/users'
     | '/tenant/documents'
     | '/tenant/maintenance'
     | '/tenant/receipts'
@@ -307,6 +391,13 @@ export interface RootRouteChildren {
   SettingsRoute: typeof SettingsRoute
   TenantsRoute: typeof TenantsRoute
   UnitsRoute: typeof UnitsRoute
+  AdminFeaturesRoute: typeof AdminFeaturesRoute
+  AdminLandlordsRoute: typeof AdminLandlordsRoute
+  AdminMonitoringRoute: typeof AdminMonitoringRoute
+  AdminPropertiesRoute: typeof AdminPropertiesRoute
+  AdminReportsRoute: typeof AdminReportsRoute
+  AdminSubscriptionsRoute: typeof AdminSubscriptionsRoute
+  AdminUsersRoute: typeof AdminUsersRoute
   TenantDocumentsRoute: typeof TenantDocumentsRoute
   TenantMaintenanceRoute: typeof TenantMaintenanceRoute
   TenantReceiptsRoute: typeof TenantReceiptsRoute
@@ -472,6 +563,55 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof TenantDocumentsRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/admin/users': {
+      id: '/admin/users'
+      path: '/admin/users'
+      fullPath: '/admin/users'
+      preLoaderRoute: typeof AdminUsersRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin/subscriptions': {
+      id: '/admin/subscriptions'
+      path: '/admin/subscriptions'
+      fullPath: '/admin/subscriptions'
+      preLoaderRoute: typeof AdminSubscriptionsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin/reports': {
+      id: '/admin/reports'
+      path: '/admin/reports'
+      fullPath: '/admin/reports'
+      preLoaderRoute: typeof AdminReportsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin/properties': {
+      id: '/admin/properties'
+      path: '/admin/properties'
+      fullPath: '/admin/properties'
+      preLoaderRoute: typeof AdminPropertiesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin/monitoring': {
+      id: '/admin/monitoring'
+      path: '/admin/monitoring'
+      fullPath: '/admin/monitoring'
+      preLoaderRoute: typeof AdminMonitoringRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin/landlords': {
+      id: '/admin/landlords'
+      path: '/admin/landlords'
+      fullPath: '/admin/landlords'
+      preLoaderRoute: typeof AdminLandlordsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin/features': {
+      id: '/admin/features'
+      path: '/admin/features'
+      fullPath: '/admin/features'
+      preLoaderRoute: typeof AdminFeaturesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -491,6 +631,13 @@ const rootRouteChildren: RootRouteChildren = {
   SettingsRoute: SettingsRoute,
   TenantsRoute: TenantsRoute,
   UnitsRoute: UnitsRoute,
+  AdminFeaturesRoute: AdminFeaturesRoute,
+  AdminLandlordsRoute: AdminLandlordsRoute,
+  AdminMonitoringRoute: AdminMonitoringRoute,
+  AdminPropertiesRoute: AdminPropertiesRoute,
+  AdminReportsRoute: AdminReportsRoute,
+  AdminSubscriptionsRoute: AdminSubscriptionsRoute,
+  AdminUsersRoute: AdminUsersRoute,
   TenantDocumentsRoute: TenantDocumentsRoute,
   TenantMaintenanceRoute: TenantMaintenanceRoute,
   TenantReceiptsRoute: TenantReceiptsRoute,
