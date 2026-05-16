@@ -51,19 +51,19 @@ function RegisterPage() {
 
     setLoading(true);
     try {
-      const payload = {
-        full_name: fullName.trim(),
-        name: fullName.trim(),
-        email: email.trim(),
-        phone: phone.trim(),
-        password,
-        role,
-      };
-
-      const res = await apiFetch<{ status: string; message?: string }>(
-        "/register.php",
-        { method: "POST", body: JSON.stringify(payload) },
+      const response = await fetch(
+        "https://tenant.zenviktechnologies.com/api/register.php",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            name: fullName.trim(),
+            email: email.trim(),
+            password,
+          }),
+        },
       );
+      const res = await response.json().catch(() => ({} as any));
 
       if (res?.status !== "success") {
         throw new Error(res?.message || "Registration failed");
